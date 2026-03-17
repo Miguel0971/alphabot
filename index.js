@@ -5,7 +5,7 @@ app.get("/", (request, response) => {
   ping.setHours(ping.getHours() - 3);
   console.log(`Ping recebido às ${ping.getUTCHours()}:${ping.getUTCMinutes()}:${ping.getUTCSeconds()}`);
   response.sendStatus(200);
-});  // Aqui é onde é definido o que acontece quando o bot é ligado, nesse caso, ele envia uma mensagem no console com o horário em que foi ligado.
+});  // Aqui é onde é definido o que acontece quando o bot é ligado, nesse caso, ele envia uma mensagem no console com o horário em que foi ligado e cria o link html dele para hospedagem nativa.
 app.listen(process.env.PORT); 
 
 const discord = require('discord.js'); // Importação da livraria discord.js, essencial para todos os bots de discord
@@ -24,8 +24,8 @@ client.on("ready", () => { // Evento que define quando ele é ligado.
     ], // Atividades atualizadas a cada certo tempo nos status do bot.
     i = 0;
   setInterval( () => client.user.setActivity(`${activities[i++ % activities.length]}`, {
-        type: "WATCHING" // Tipo de atividade, como "PLAYING" (Jogando)
-      }), 1000 * 60); // Tempo em milissegundos em que é necessário para atividade atualizar.
+        type: "WATCHING" // Tipo de atividade, como por exemplo "PLAYING" (Jogando). Esta define que ele está "WATCHING" (assistindo)
+      }), 1000 * 60); // Tempo em milissegundos em que é necessário para atividade atualizar. 1000 equivale a 1 segundo, multiplica por 60, ou seja, atualizada a cada minuto.
   client.user
       .catch(console.error);
 console.log("Estou Online!") // Console dizendo que ligou.
@@ -46,7 +46,7 @@ client.on('message', message => { // Evento de mensagem para reconhecer comandos
         const commandFile = require(`./commands/${command}.js`)
         commandFile.run(client, message, args); // Função para que puxe o comando e faça-o funcionar
     } catch (err) {
-    console.error('Erro:' + err); // Função para devolver um erro.
+    console.error('Erro:' + err); // Função para devolver o erro específico no console.
   }
 });
 
